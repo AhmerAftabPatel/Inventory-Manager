@@ -5,9 +5,6 @@ const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require("fs");
 const moment = require("moment");
-const multer = require("multer");
-const multerS3 = require("multer-s3");
-const aws = require("aws-sdk");
 const path = require("path");
 function checkFileType(file, cb) {
   // Allowed ext
@@ -60,55 +57,55 @@ exports.stockInOut = (req, res, next) => {
   let product = req.product;
   let user = req.user;
 
-  uploadsBusinessGallery(req, res, error => {
-    if (req.files.length > 0) {
-      if (error) {
-        // res.json({ error: error });
-      } else {
-        // If File not found
-        if (req.files === undefined) {
-          res.json("Error: No File Selected");
-        } else {
-          // If Success
-          let fileArray = req.files,
-            fileLocation;
-          const galleryImgLocationArray = [];
-          for (let i = 0; i < fileArray.length; i++) {
-            fileLocation = fileArray[i].location;
-            galleryImgLocationArray.push(fileLocation);
-          }
+  // uploadsBusinessGallery(req, res, error => {
+  //   if (req.files.length > 0) {
+  //     if (error) {
+  //       // res.json({ error: error });
+  //     } else {
+  //       // If File not found
+  //       if (req.files === undefined) {
+  //         res.json("Error: No File Selected");
+  //       } else {
+  //         // If Success
+  //         let fileArray = req.files,
+  //           fileLocation;
+  //         const galleryImgLocationArray = [];
+  //         for (let i = 0; i < fileArray.length; i++) {
+  //           fileLocation = fileArray[i].location;
+  //           galleryImgLocationArray.push(fileLocation);
+  //         }
 
-          Product.findByIdAndUpdate(
-            product._id,
-            {
-              $push: {
-                stock_images: {
-                  photos: galleryImgLocationArray,
-                  date: req.body.date,
-                  stockIn: req.body.stockIn,
-                  wastage: req.body.wastage,
-                  samples: req.body.sample,
-                  sold: req.body.sold,
-                  addedBy: user._id,
-                  name: user.username
-                }
-              }
-            },
-            { new: true }
-          ).exec((err, result) => {
-            console.log(err);
-            if (err) {
-              // return res.status(400).json({
-              //   error: err
-              // });
-              console.log(err);
-            }
-            // res.json(result);
-          });
-        }
-      }
-    }
-  });
+  //         Product.findByIdAndUpdate(
+  //           product._id,
+  //           {
+  //             $push: {
+  //               stock_images: {
+  //                 photos: galleryImgLocationArray,
+  //                 date: req.body.date,
+  //                 stockIn: req.body.stockIn,
+  //                 wastage: req.body.wastage,
+  //                 samples: req.body.sample,
+  //                 sold: req.body.sold,
+  //                 addedBy: user._id,
+  //                 name: user.username
+  //               }
+  //             }
+  //           },
+  //           { new: true }
+  //         ).exec((err, result) => {
+  //           console.log(err);
+  //           if (err) {
+  //             // return res.status(400).json({
+  //             //   error: err
+  //             // });
+  //             console.log(err);
+  //           }
+  //           // res.json(result);
+  //         });
+  //       }
+  //     }
+  //   }
+  // });
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.parse(req, (err, fields, file) => {

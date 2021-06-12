@@ -31,15 +31,6 @@ const {
   isAdmin
 } = require("../controllers/authentication");
 const multer = require("multer");
-const AWS = require("aws-sdk");
-const uuid = require("uuid/v4");
-const { postPinfromUser } = require("../controllers/pin_sp");
-const s3 = new AWS.S3({
-  credentials: {
-    accessKeyId: process.env.AWS_ID,
-    secretAccessKey: process.env.AWS_SECRET
-  }
-});
 
 const storage = multer.memoryStorage({
   destination: function (req, file, callback) {
@@ -65,25 +56,25 @@ router.post(
   isAdmin,
   upload,
   (req, res) => {
-    if (req.file) {
-      let myFile = req.file.originalname.split(".");
-      const fileType = myFile[myFile.length - 1];
+    // if (req.file) {
+    //   let myFile = req.file.originalname.split(".");
+    //   const fileType = myFile[myFile.length - 1];
 
-      const params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: `users/${uuid()}.${fileType}`,
-        Body: req.file.buffer
-      };
-      s3.upload(params, (error, data) => {
-        if (error) {
-          res.status(500).send(error);
-        }
-        signup(data, req, res);
+    //   const params = {
+    //     Bucket: process.env.AWS_BUCKET_NAME,
+    //     Key: `users/${uuid()}.${fileType}`,
+    //     Body: req.file.buffer
+    //   };
+    //   s3.upload(params, (error, data) => {
+    //     if (error) {
+    //       res.status(500).send(error);
+    //     }
+    //     signup(data, req, res);
         
-      });
-    } else {
+    //   });
+    // } else {
       signup("data", req, res);
-    }
+    // }
   }
 );
 

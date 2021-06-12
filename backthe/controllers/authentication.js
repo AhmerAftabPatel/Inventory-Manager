@@ -3,7 +3,6 @@ const { check, validationResult } = require("express-validator");
 var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
 const formidable = require("formidable");
-const { Greengrass } = require("aws-sdk");
 const { postPinfromUser } = require("./pin_sp");
 exports.signup = (data, req, res) => {
   const { username, email, phone_number, location ,pincode} = req.body;

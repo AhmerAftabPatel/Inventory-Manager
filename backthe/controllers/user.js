@@ -3,7 +3,6 @@ const { Order } = require("../models/oder");
 const Pin = require("../models/pin_sp");
 
 const Product = require("../models/product");
-const { CostExplorer } = require("aws-sdk");
 
 exports.getUserById = (req, res, next, id) => {
   User.findById(id).exec((err, user) => {
