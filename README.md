@@ -1,6 +1,7 @@
 # sabhbechdo
 
 inventory manager
+
 Tech Stack-
 - React
 - Express
