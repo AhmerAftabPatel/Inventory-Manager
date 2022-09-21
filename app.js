@@ -40,6 +40,9 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(cors());
 app.use("/api", photo);
+app.use("/", (req,res) => {
+  res.send("it works")
+});
 
 // My routes
 app.use("/api", authRoutes);
