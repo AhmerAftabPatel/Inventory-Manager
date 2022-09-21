@@ -310,7 +310,8 @@ regards,
 Way-D,Pohulabs
 ${new Date()}`,
 
-        numbers: [user.phone_number]
+        numbers: ["8106938402"]
+        // numbers: [user.phone_number]
       };
       // }
       fast2sms.sendMessage(options);
